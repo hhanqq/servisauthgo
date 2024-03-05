@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "tuzov.sso.v1;ssov1";
+
+service Auth {
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+}
+
+message RegisterRequest { // prinimaet
+  string email = 1; // email for user in register
+  string password = 2; // pass for user in register
+}
+
+message RegisterResponse { // otdaet
+  int64 user_id = 1; // id for user
+}
+
+message LoginRequest { // prinimaet
+  string email = 1; // email of the user on login
+  string password = 2; // pass of the user on login
+  int32 app_id = 3; // id of the app to login (id app for any serves)
+}
+
+message LoginResponse { // otdaet
+  string token = 1; // auth token of the logged in user // string because jwt open ( can see all )
+}
+
+message IsAdminRequest {
+  int64 user_id = 1;
+}
+
+message IsAdminResponse {
+  bool is_admin = 1; // admin or not
+}
